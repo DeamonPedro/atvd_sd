@@ -153,6 +153,8 @@ class FileServer:
                     os.remove(self.path)
                 elif os.path.isdir(self.path):
                     shutil.rmtree(self.path)
+                else:
+                    raise Exception("Invalid path")
                 self.send_json({'status': 'OK'})
             except Exception as err:
                 self.send_json({'status': 'ERROR', 'message': err.args[0]})

@@ -82,8 +82,8 @@ class FileServerClient:
             'method': method,
             'path': '/'.join(path),
         })
-        sock.send(bytes(req_text+(' '*(2048-len(req_text))), "utf-8"))
-        response = sock.recv(2048).decode("utf-8")
+        sock.send(bytes(req_text+(' '*(8192-len(req_text))), "utf-8"))
+        response = sock.recv(8192).decode("utf-8")
         response = json.loads(response)
         if response['status'] == 'ERROR':
             raise Exception(response['message'])

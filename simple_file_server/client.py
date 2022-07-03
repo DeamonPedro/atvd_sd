@@ -51,7 +51,10 @@ commands = {
 }
 
 while True:
-    pwd = '/'.join(client.current_dir)
+    if len(client.current_dir) > 3:
+        pwd = '…'+'/'.join(client.current_dir[-3:])
+    else:
+        pwd = '/'.join(client.current_dir)
     prompt = f'[{colored(pwd,color="blue",attrs=["underline"])}] ➤ '
     command = input(prompt)
     cmd_words = command.strip().split(' ')
@@ -70,6 +73,6 @@ while True:
                     print(colored(f'[!] Invalid command: {command}', 'red'))
                     continue
             except Exception as err:
-                print(colored(err.args[0], 'red'))
+                print(colored(f'[!] {err.args[0]}', 'red'))
         else:
             print(colored(f'[!] Command not found: {cmd_name}', 'red'))

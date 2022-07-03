@@ -71,7 +71,7 @@ class FileServer:
                 ]
             }
             try:
-                request_data = connection.recv(2048).decode("utf-8")
+                request_data = connection.recv(8192).decode("utf-8")
                 request_params = json.loads(request_data)
                 if set(['method', 'path']) <= set(request_params):
                     if request_params['method'] in methods_config:
@@ -106,7 +106,7 @@ class FileServer:
         def download_request_file(self) -> None:
             print(f'Downloading [{self.path}]...')
             self.send_json({'status': 'OK'})
-            res_header = self.connection.recv(2048).decode("utf-8")
+            res_header = self.connection.recv(8192).decode("utf-8")
             file_size = int(res_header)
             bytes_left = file_size
             file_write = open(self.path, "wb")
@@ -161,7 +161,7 @@ class FileServer:
         def send_json(self, dictionary: dict) -> None:
             json_str = json.dumps(dictionary)
             self.connection.send(
-                bytes(json_str+(' ' * (2048-len(json_str))), "utf-8"))
+                bytes(json_str+(' ' * (8192-len(json_str))), "utf-8"))
 
         def finish_connection(self):
             self.status = 'finished'

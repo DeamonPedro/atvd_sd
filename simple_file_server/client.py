@@ -2,7 +2,7 @@ import sys
 from lib.file_server_client import FileServerClient
 from termcolor import colored
 from tabulate import tabulate
-
+import readline
 from utils import printProgressBar
 
 
